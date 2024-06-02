@@ -1,8 +1,10 @@
 const express = require("express")
 const userRoute = require("./src/routes/user.route")
 const app = express()
+const door = 3000
 
-app.use("/soma", userRoute)
+app.use(express.json())
+app.use("/user", userRoute)
 
 // Rota
 // Method HTTP - CRUD(REATE, READ, UPDATE, DELETE)
@@ -17,4 +19,4 @@ app.use("/soma", userRoute)
   res.send('Hello World')
 }) */
 
-app.listen(3000)
+app.listen(door, () => console.log(`Servidor rodando na porta: ${door}`))
