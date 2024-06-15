@@ -1,8 +1,12 @@
 const express = require("express")
 const userRoute = require("./src/routes/user.route")
 const app = express()
-const door = 3000
 
+//db
+const connectDataBase = require('./src/database/db')
+
+const door = 3000
+connectDataBase()
 app.use(express.json())
 app.use("/user", userRoute)
 
