@@ -1,13 +1,18 @@
 const express = require("express")
 const userRoute = require("./src/routes/user.route")
+
+//connect to database MongoAtlas
+const connectDataBase = require('./src/database/db')
+//define access door to API 
+const door = 3000
+
 const app = express()
 
-//db
-const connectDataBase = require('./src/database/db')
-
-const door = 3000
 connectDataBase()
+
 app.use(express.json())
+
+
 app.use("/user", userRoute)
 
 // Rota
