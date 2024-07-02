@@ -8,6 +8,7 @@ const createUser = async (req, res) => {
   }
 
   try {
+
     const user = await userService.createService(req.body)
     if (!user) {
       return res.status(400).send({ message: "Error creating User" })
@@ -52,9 +53,9 @@ const findById = async (req, res) => {
   try {
     const user = await userService.findByIdService(id)
 
-    if (!user) {
+    /* if (!user) {
       throw new Error("User not found")
-    }
+    } */
 
     res.status(200).send(user)
   } catch (error) {
@@ -82,12 +83,12 @@ const update = async (req, res) => {
     if (!name && !username && !email && !password && !avatar && !background) {
       throw new Error("No fields provided")
     }
-    const user = await userService.findByIdService(id)
+    /* const user = await userService.findByIdService(id)
     if (!user) {
       throw new Error("User not found")
-    }
+    } */
 
-    const updatedUser = await userService.updateService(id, req.body)
+    const updatedUser = await userService.updateService(id, {name, username, email, password, avatar, background})
     return res
       .status(200)
       .send({ message: "User successfuly updated!", updatedUser })
