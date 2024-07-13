@@ -1,31 +1,20 @@
-const express = require("express")
-const userRoute = require("./src/routes/user.route")
+import express from "express"
+import dotenv from "dotenv"
+import { connectDataBase } from "./src/database/db.js"
 
-//connect to database MongoAtlas
-const connectDataBase = require('./src/database/db')
-//define access door to API 
-const door = 3000
+import { userRouter } from "./src/routes/user.route.js"
+import { authRouter } from "./src/routes/auth.route.js"
+
+dotenv.config()
 
 const app = express()
+const door = process.env.PORT || 3000 //define access door to API
 
-connectDataBase()
+connectDataBase() //connect to database MongoAtlas
 
 app.use(express.json())
 
-
-app.use("/user", userRoute)
-
-// Rota
-// Method HTTP - CRUD(REATE, READ, UPDATE, DELETE)
-// GET - Pega uma Info
-// POST - Cria uma info
-// PUT - Atera toda a info
-// PATH - Altera parte da info
-// DELETE - apaga uma info
-// Name - Um identificador da rota
-// Function (callback) - Responsável por executar algum comando
-/* app.get('/', (req, res) => {
-  res.send('Hello World')
-}) */
+app.use("/user", userRouter) //users routes
+app.use("/auth", authRouter) //users routes
 
 app.listen(door, () => console.log(`Servidor rodando na porta: ${door}`))

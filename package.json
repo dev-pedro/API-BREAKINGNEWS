@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "API for SPA Breaking News",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index",
     "dev": "nodemon index"
@@ -11,11 +12,14 @@
   "author": "Pedro Henrique",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "mongoose": "^8.4.1",
     "nodemon": "^3.1.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21"
   }
 }

@@ -1,4 +1,4 @@
-const User = require("../models/User")
+import { User } from "../models/User.js"
 
 const createService = (body) => User.create(body)
 
@@ -6,11 +6,6 @@ const findAllService = () => User.find()
 
 const findByIdService = (id) => User.findById(id)
 
-const updateService = (id, body) => User.findOneAndUpdate({_id: id}, body)
+const updateService = (id, body) => User.findOneAndUpdate({ _id: id }, body)
 
-module.exports = {
-  createService,
-  findAllService,
-  findByIdService,
-  updateService
-}
+export { createService, findAllService, findByIdService, updateService }
