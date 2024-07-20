@@ -1,18 +1,17 @@
 import mongoose from "mongoose"
 import { findByIdService } from "../services/user.service.js"
 
-export const validId = (req, res, next) => {
+const validId = (req, res, next) => {
   const id = req.params.id
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    console.log("middleware Invalid ID: " + id)
     return res.status(400).send({ message: "Invalid user ID" })
   }
 
   next()
 }
 
-export const validUser = async (req, res, next) => {
+const validUser = async (req, res, next) => {
   const id = req.params.id
 
   try {
@@ -25,8 +24,6 @@ export const validUser = async (req, res, next) => {
     req.id = id
     req.user = user
   } catch (error) {
-    console.error("Error:", error)
-
     if (error.message === "User not found") {
       return res.status(404).send({ message: "User not found" })
     } else if (
@@ -42,9 +39,9 @@ export const validUser = async (req, res, next) => {
 
   next()
 }
-/* 
-export default {
+
+export {
   validId,
   validUser
 }
- */
+

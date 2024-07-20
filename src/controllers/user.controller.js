@@ -4,7 +4,8 @@ import {
   updateService
 } from "../services/user.service.js"
 
-const createUser = async (req, res) => {
+const createNewUser = async (req, res) => {
+  //all validation was done by global middleware
   const { name, username, email, password, avatar, background } = req.body
 
   try {
@@ -38,7 +39,8 @@ const createUser = async (req, res) => {
   }
 }
 
-const findAll = async (req, res) => {
+const findAllUsers = async (req, res) => {
+  //all validation was done by global middleware
   try {
     const users = await findAllService()
     if (users.leght === 0) {
@@ -54,12 +56,15 @@ const findAll = async (req, res) => {
   }
 }
 
-const findById = async (req, res) => {
+const findUserById = async (req, res) => {
+  //all validation was done by global middleware
+  //return user already valided by the middleware
   const { user } = req
   res.status(200).send(user)
 }
 
-const update = async (req, res) => {
+const updateUser = async (req, res) => {
+  //all validation was done by global middleware
   const { id } = req
   const { name, username, email, password, avatar, background } = req.body
 
@@ -80,22 +85,12 @@ const update = async (req, res) => {
       .status(200)
       .send({ message: "User successfuly updated!", updatedUser })
   } catch (error) {
-    console.error("Error:", error)
-
-    if (error.message === "User not found") {
-      return res.status(404).send({ message: "User not found" })
-    } else if (error.message === "No fields provided") {
+    if (error.message === "No fields provided") {
       res.status(400).send({ message: "Submit at one field for update" })
-    } else if (
-      error.name === "CastError" &&
-      error.path === "_id" &&
-      error.kind === "ObjectId"
-    ) {
-      return res.status(400).send({ message: "Invalid user ID" })
+    } else {
+      return res.status(500).send({ message: error.message })
     }
-
-    return res.status(500).send(error)
   }
 }
 
-export { createUser, findAll, findById, update }
+export { createNewUser, findAllUsers, findUserById, updateUser }

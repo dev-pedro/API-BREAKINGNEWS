@@ -1,4 +1,7 @@
-import { loginService } from "../services/authService.js"
+import {
+  loginService,
+  genenerateJwtTokenService
+} from "../services/authService.js"
 import bcrypt from "bcrypt"
 
 const login = async (req, res) => {
@@ -16,16 +19,13 @@ const login = async (req, res) => {
       throw new Error("Email or password is incorrect! Try again.")
     }
 
+    const token = genenerateJwtTokenService(user._id)
+
     res.status(200).send({
-      message: `Bem vindo(a): ${user.name}`,
-      username: user.username,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      background: user.background
+      message: `Login successful`,
+      token
     })
   } catch (error) {
-    console.error("Error:", error.message)
     res.status(401).send({ message: error.message })
   }
 }
