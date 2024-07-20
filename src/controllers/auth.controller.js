@@ -1,7 +1,7 @@
 import {
   loginService,
   genenerateJwtTokenService
-} from "../services/authService.js"
+} from "../services/auth.service.js"
 import bcrypt from "bcrypt"
 
 const login = async (req, res) => {

@@ -14,15 +14,14 @@ const NewsSchema = new Schema({
     required: true
   },
   author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
     required: true
   },
   createdAt: {
     type: Date,
     default: Date.now
   },
-  user: {
+  user_id: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
@@ -33,6 +32,11 @@ const NewsSchema = new Schema({
   },
   likes: {
     type: Array,
+    required: true
+  },
+  public:{
+    type: Boolean,
+    default: true,
     required: true
   }
 })
