@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { validId, validUser } from "../middlewares/global.middlewares.js"
+import { validUserId, validUser } from "../middlewares/global.middlewares.js"
 import {
   createNewUser,
   findUserById,
@@ -11,7 +11,7 @@ const router = Router()
 
 router.post("/", createNewUser) // create a new user
 router.get("/", findAllUsers) // get all users
-router.get("/:id", validId, validUser, findUserById) //get user by id
-router.patch("/:id", validId, validUser, updateUser) // update user by id
+router.get("/:user_id", validUserId, validUser, findUserById) //get user by id
+router.patch("/:user_id", validUserId, validUser, updateUser) // update user by id
 
 export { router as userRouter }

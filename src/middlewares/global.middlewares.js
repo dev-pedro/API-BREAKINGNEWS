@@ -2,10 +2,10 @@ import mongoose from "mongoose"
 import { findByIdService } from "../services/user.service.js"
 import { findOneNewsService } from "../services/news.service.js"
 
-const validId = (req, res, next) => {
-  const id = req.params.id
+const validUserId = (req, res, next) => {
+  const { user_id } = req.params
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(user_id)) {
     return res.status(400).send({ message: "Invalid Id" })
   }
 
@@ -13,16 +13,16 @@ const validId = (req, res, next) => {
 }
 
 const validUser = async (req, res, next) => {
-  const { id } = req.params
+  const { user_id } = req.params
 
   try {
-    const user = await findByIdService(id)
+    const user = await findByIdService(user_id)
 
     if (!user) {
       throw new Error("User not found")
     }
 
-    req.id = id
+    req.user_id = user_id
     req.user = user
   } catch (error) {
     if (error.message === "User not found") {
@@ -35,11 +35,21 @@ const validUser = async (req, res, next) => {
   next()
 }
 
+const validNewsId = (req, res, next) => {
+  const { news_id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(news_id)) {
+    return res.status(400).send({ message: "Invalid Id" })
+  }
+
+  next()
+}
+
 const validNews = async (req, res, next) => {
-  const { id } = req.params
+  const { news_id } = req.params
 
   try {
-    const news = await findOneNewsService(id)
+    const news = await findOneNewsService(news_id)
 
     if (!news) {
       throw new Error("News not found")
@@ -56,4 +66,4 @@ const validNews = async (req, res, next) => {
   next()
 }
 
-export { validId, validUser, validNews }
+export { validUserId, validUser,validNewsId, validNews }

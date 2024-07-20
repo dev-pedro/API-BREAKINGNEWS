@@ -2,14 +2,16 @@ import { Router } from "express"
 import {
   createNews,
   findAllNews,
-  findOneNews
+  findOneNews,
+  findOwnersNews
 } from "../controllers/news.controller.js"
-import { validId, validNews } from "../middlewares/global.middlewares.js"
+import { validNewsId, validNews, validUserId } from "../middlewares/global.middlewares.js"
 
 const router = Router()
 
 router.post("/create", createNews)
 router.get("/", findAllNews)
-router.get("/:id", validId, validNews, findOneNews)
+router.get("/:news_id", validNewsId, validNews, findOneNews)
+router.get("/owners/:user_id", validUserId, findOwnersNews)
 
 export { router as newsRouter }

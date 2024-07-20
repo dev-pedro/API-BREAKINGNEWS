@@ -1,11 +1,12 @@
 import {
   createNewsService,
-  findAllNewsService
+  findAllNewsService,
+  findOwnersNewsService
 } from "../services/news.service.js"
 
 const createNews = async (req, res) => {
   const user = {
-    user_id: "66927adc1201da8230438928",
+    user_id: "669be7bb3fbde0fcf492198e",
     author: "Pedro Henrique"
   }
   const newsBody = req.body
@@ -42,4 +43,22 @@ const findOneNews = async (req, res) => {
   res.status(200).send(news)
 }
 
-export { createNews, findAllNews, findOneNews }
+const findOwnersNews = async (req, res) => {
+  const { user_id } = req.params
+
+  try {
+    const news = await findOwnersNewsService(user_id)
+    if (news.length === 0) {
+      throw new Error("No news found")
+    }
+    res.status(200).send(news)
+  } catch (error) {
+    if (error.message === "No news found") {
+      return res.status(404).send({ message: "No news found" })
+    } else {
+      return res.status(500).send({ message: error.message })
+    }
+  }
+}
+
+export { createNews, findAllNews, findOneNews, findOwnersNews }
